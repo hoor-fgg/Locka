@@ -1,0 +1,393 @@
+/* --- المتغيرات والتنسيقات الأساسية --- */
+:root {
+    --primary-color: #2E5B9A;
+    --primary-hover: #234778;
+    --bg-color: #F8F8FF;
+    --card-bg: #FFFFFF;
+    --border-color: #E5E7EB;
+    --text-color: #32445b;
+    --text-muted: #6B7280;
+    --active-green: #28a745;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    direction: rtl;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(46, 91, 154, 0.08);
+    border: 1px solid var(--border-color);
+}
+
+/* --- هيدر الصفحة: اللوقو يمين والشرطات يسار --- */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+/* القسم الأيمن (اللوقو والنص) */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* مسافة بين اللوقو والنص */
+}
+
+/* تنسيق اللوقو مع الظل زوايا ناعمة */
+.app-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background-color: #ffffff;
+    
+}
+
+.welcome-title {
+    font-size: 1.3rem;
+    color: var(--primary-color, #1E293B) !important;
+    margin: 0;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: var(--text-muted, #64748B);
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+/* القسم الأيسر (زر الشرطات الثلاث) */
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.menu-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 32px;
+    height: 26px;
+    padding: 2px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.menu-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.menu-btn span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color, #1E293B) !important;
+    border-radius: 2px;
+}
+
+
+/* تنسيق أيقونات القائمة الجانبية SVG */
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    stroke: var(--primary-color);
+    flex-shrink: 0;
+    transition: stroke 0.2s;
+}
+
+.sidebar-menu a:hover .menu-icon,
+.sidebar-menu a.active .menu-icon {
+    stroke: var(--primary-color);
+}
+
+
+/* --- شريط البحث --- */
+.search-container {
+    position: relative;
+    margin-bottom: 28px;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 14px 18px 14px 44px;
+    border: 1px solid var(--border-color);
+    background-color: #FAFAFA;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.search-bar:focus {
+    border-color: var(--primary-color);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(46, 91, 154, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px !important;
+    height: 20px !important;
+    stroke: #9CA3AF;
+}
+
+/* --- شبكة الأزرار الرئيسية --- */
+.grid-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.card {
+    background-color: #F8FBFF;
+    border: 1px solid #E2ECF9;
+    border-radius: 16px;
+    padding: 24px 16px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.25s ease;
+}
+
+.card:hover {
+    background-color: #EEF5FC;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(46, 91, 154, 0.12);
+}
+
+.card-icon {
+    width: 32px !important;
+    height: 32px !important;
+    stroke: var(--primary-color);
+}
+
+/* --- قسم الحجوزات القادمة --- */
+.section-title {
+    font-size: 1.15rem;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.booking-card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    margin-bottom: 16px;
+    transition: transform 0.2s;
+}
+
+.booking-card:hover {
+    transform: translateY(-2px);
+}
+
+.booking-details p {
+    font-size: 0.95rem;
+    color: #4B5563;
+    margin-bottom: 6px;
+}
+
+.booking-details strong {
+    color: var(--primary-color);
+}
+
+.booking-date {
+    font-size: 0.85rem;
+    color: #1E293B;
+    margin-top: 6px;
+}
+
+.booking-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.booking-icon-box {
+    width: 42px;
+    height: 42px;
+    background-color: #EEF5FC;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.booking-icon-box svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke: var(--primary-color);
+}
+
+.badge-active {
+    background-color: #E6F4EA;
+    color: var(--active-green);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.btn-view-all {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    border-radius: 20px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin-top: 8px;
+    transition: all 0.2s;
+}
+
+.btn-view-all:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+}
+
+/* --- القائمة الجانبية (Sidebar) --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.12);
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 18px;
+}
+
+.sidebar.open {
+    left: 0 !important;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: var(--text-color);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 10px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 0.98rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.sidebar-menu a:hover, .sidebar-menu a.active {
+    background-color: #EEF5FC;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.menu-icon {
+    font-size: 1.25rem;
+}
+
+/* خلفية التظليل */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 999;
+}
+
+.overlay.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* --- تجاوب الشاشات الصغيرة --- */
+@media (max-width: 600px) {
+    body { padding: 0; }
+    .app-container {
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+        min-height: 100vh;
+        padding: 20px 16px;
+    }
+}

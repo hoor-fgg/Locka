@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>تقييم اللوكر - LOCKA</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Tahoma, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #F5F8FF, #FFFFFF);
+            color: #244A7C;
+            overflow-x: hidden;
+        }
+
+        /* زخرفة أعلى اليمين */
+        body::before {
+            content: "";
+            position: fixed;
+            width: 230px;
+            height: 230px;
+            background: #E8F1FC;
+            border-radius: 50%;
+            top: -100px;
+            right: -80px;
+            z-index: -1;
+        }
+
+        /* زخرفة أسفل اليسار */
+        body::after {
+            content: "";
+            position: fixed;
+            width: 180px;
+            height: 180px;
+            background: #EDF4FC;
+            border-radius: 50%;
+            bottom: -80px;
+            left: -60px;
+            z-index: -1;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 25px auto;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            text-align: center;
+            position: relative;
+            min-height: 150px;
+            margin-bottom: 25px;
+        }
+
+        /* ================= LOGO ================= */
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-icon-image {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: white;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #2E5B9A;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            font-size: 20px;
+            color: #5B7190;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 55px;
+            align-items: center;
+            direction: ltr;
+        }
+
+        /* ================= CARD ================= */
+
+        .card {
+            direction: rtl;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 30px;
+            padding: 35px;
+            box-shadow:
+                0 20px 60px rgba(46, 91, 154, 0.12);
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            font-size: 35px;
+            margin-bottom: 10px;
+            color: #2E5B9A;
+            text-align: center;
+        }
+
+        .description {
+            color: #5B7190;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* ================= OVERALL ================= */
+
+        .overall {
+            background: #F5F8FF;
+            padding: 20px;
+            border-radius: 22px;
+            margin-bottom: 25px;
+            border: 1px solid #E1EBF7;
+        }
+
+        .overall-title {
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #244A7C;
+            text-align: center;
+        }
+
+        .stars {
+            direction: ltr;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .star {
+            font-size: 48px;
+            color: #C8D4E2;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #3E73BA;
+            transform: scale(1.1);
+        }
+
+        /* ================= QUESTIONS ================= */
+
+        .question-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #244A7C;
+        }
+
+        .rating-items {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .rating-box {
+            padding: 18px 6px;
+            background: #F8FAFD;
+            border-radius: 18px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+
+        .rating-box:hover {
+            transform: translateY(-4px);
+            border-color: #A7C8F0;
+        }
+
+        .emoji {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .rating-box h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #31577F;
+            line-height: 1.5;
+        }
+
+        .small-stars {
+            direction: ltr;
+            display: flex;
+            justify-content: center;
+            gap: 1px;
+        }
+
+        .small-star {
+            font-size: 17px;
+            color: #C8D4E2;
+            cursor: pointer;
+        }
+
+        .small-star.active {
+            color: #3E73BA;
+        }
+
+        /* ================= NOTES ================= */
+
+        label {
+            display: block;
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #244A7C;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 110px;
+            resize: vertical;
+            border: 2px solid #D9E4F0;
+            border-radius: 16px;
+            padding: 16px;
+            font-size: 16px;
+            outline: none;
+            color: #29496D;
+            background: white;
+        }
+
+        textarea:focus {
+            border-color: #3E73BA;
+            box-shadow: 0 0 0 4px #E8F1FC;
+        }
+
+        /* ================= زر إرسال التقييم ================= */
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 20px;
+            border: none;
+            border-radius: 30px;
+            padding: 17px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #2E5B9A,
+                    #3E73BA
+                );
+
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(46, 91, 154, 0.25);
+        }
+
+        /* ================= زر الملف الشخصي ================= */
+
+        .profile-btn {
+            width: 100%;
+            margin-top: 12px;
+            border: 2px solid #3E73BA;
+            border-radius: 30px;
+            padding: 17px;
+
+            background: white;
+            color: #3E73BA;
+
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .profile-btn:hover {
+            background: #F5F8FF;
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(46, 91, 154, 0.15);
+        }
+
+        /* ================= SUCCESS ================= */
+
+        .success {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            background: #E8F7ED;
+            color: #257044;
+            font-weight: bold;
+        }
+
+        /* ================= LOCKER ================= */
+
+        .locker-area {
+            direction: ltr;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .locker {
+            width: 300px;
+            margin: auto;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #A7C8F0,
+                    #6E9DD2
+                );
+
+            padding: 10px;
+            border-radius: 14px;
+
+            box-shadow:
+                0 20px 40px
+                rgba(46, 91, 154, 0.18);
+        }
+
+        .locker-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .door {
+            height: 145px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #F5F8FF,
+                    #DCEAF8
+                );
+
+            border: 2px solid #A7C8F0;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .door::before {
+            content: "";
+            position: absolute;
+            width: 35px;
+            height: 5px;
+            background: #6E91BA;
+            top: 20px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            border-radius: 5px;
+
+            box-shadow:
+                0 10px #6E91BA,
+                0 20px #6E91BA;
+        }
+
+        .handle {
+            position: absolute;
+            width: 8px;
+            height: 38px;
+            background: #3E73BA;
+            border-radius: 8px;
+            right: 15px;
+            top: 55px;
+        }
+
+        .locked {
+            background:
+                linear-gradient(
+                    145deg,
+                    #3E73BA,
+                    #2E5B9A
+                );
+        }
+
+        .lock {
+            position: absolute;
+            font-size: 30px;
+            color: white;
+
+            top: 50%;
+            left: 50%;
+
+            transform:
+                translate(-50%, -50%);
+        }
+
+        .feedback {
+            margin-top: 25px;
+            font-size: 25px;
+            color: #3E73BA;
+            font-style: italic;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 850px) {
+
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                order: 1;
+            }
+
+            .locker-area {
+                order: 2;
+            }
+
+            .rating-items {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .container {
+                width: 94%;
+            }
+
+            header {
+                min-height: 125px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .rating-items {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 10px;
+            }
+
+            .locker {
+                width: 250px;
+            }
+
+            .door {
+                height: 110px;
+            }
+
+            .logo-icon-image {
+                width: 48px;
+                height: 48px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .feedback {
+                font-size: 21px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <!-- LOGO -->
+        <div class="logo">
+
+            <h1>LOCKA</h1>
+
+            <img
+                class="logo-icon-image"
+                src="https://i.ibb.co/d0xG0j0g/adbebc48-fa03-4175-8751-7d67cc516d96.jpg"
+                alt="LOCKA Logo">
+
+        </div>
+
+        <p class="subtitle">
+            أمان أغراضك .. راحتك تهمنا
+        </p>
+
+    </header>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <div class="content">
+
+        <!-- ================= RATING CARD ================= -->
+
+        <section class="card">
+
+            <h2>
+                تقييم اللوكر
+            </h2>
+
+            <p class="description">
+                نحن نقدر رأيك! ساعدنا على تحسين الخدمة
+                <br>
+                من خلال تقييم تجربتك مع اللوكر.
+            </p>
+
+
+            <!-- التقييم العام -->
+
+            <div class="overall">
+
+                <div class="overall-title">
+                    تقييم الخدمة العامة
+                </div>
+
+                <div
+                    class="stars"
+                    id="overallStars">
+
+                    <span
+                        class="star"
+                        data-value="1">
+                        ★
+                    </span>
+
+                    <span
+                        class="star"
+                        data-value="2">
+                        ★
+                    </span>
+
+                    <span
+                        class="star"
+                        data-value="3">
+                        ★
+                    </span>
+
+                    <span
+                        class="star"
+                        data-value="4">
+                        ★
+                    </span>
+
+                    <span
+                        class="star"
+                        data-value="5">
+                        ★
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- الأسئلة -->
+
+            <div class="question-title">
+                ما مدى رضاك عن:
+            </div>
+
+
+            <div class="rating-items">
+
+                <!-- الأمان -->
+
+                <div class="rating-box">
+
+                    <div class="emoji">
+                        😊
+                    </div>
+
+                    <h3>
+                        الأمان
+                    </h3>
+
+                    <div class="small-stars">
+
+                        <span class="small-star" data-value="1">★</span>
+                        <span class="small-star" data-value="2">★</span>
+                        <span class="small-star" data-value="3">★</span>
+                        <span class="small-star" data-value="4">★</span>
+                        <span class="small-star" data-value="5">★</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- النظافة -->
+
+                <div class="rating-box">
+
+                    <div class="emoji">
+                        🙂
+                    </div>
+
+                    <h3>
+                        النظافة
+                    </h3>
+
+                    <div class="small-stars">
+
+                        <span class="small-star" data-value="1">★</span>
+                        <span class="small-star" data-value="2">★</span>
+                        <span class="small-star" data-value="3">★</span>
+                        <span class="small-star" data-value="4">★</span>
+                        <span class="small-star" data-value="5">★</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- سهولة الاستخدام -->
+
+                <div class="rating-box">
+
+                    <div class="emoji">
+                        😐
+                    </div>
+
+                    <h3>
+                        سهولة الاستخدام
+                    </h3>
+
+                    <div class="small-stars">
+
+                        <span class="small-star" data-value="1">★</span>
+                        <span class="small-star" data-value="2">★</span>
+                        <span class="small-star" data-value="3">★</span>
+                        <span class="small-star" data-value="4">★</span>
+                        <span class="small-star" data-value="5">★</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- الدعم الفني -->
+
+                <div class="rating-box">
+
+                    <div class="emoji">
+                        😞
+                    </div>
+
+                    <h3>
+                        الدعم الفني
+                    </h3>
+
+                    <div class="small-stars">
+
+                        <span class="small-star" data-value="1">★</span>
+                        <span class="small-star" data-value="2">★</span>
+                        <span class="small-star" data-value="3">★</span>
+                        <span class="small-star" data-value="4">★</span>
+                        <span class="small-star" data-value="5">★</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- الملاحظات -->
+
+            <label for="notes">
+                ملاحظاتك (اختياري)
+            </label>
+
+            <textarea
+                id="notes"
+                placeholder="اكتب ملاحظاتك هنا..."></textarea>
+
+
+            <!-- زر الإرسال -->
+
+            <button
+                class="submit-btn"
+                onclick="submitRating()">
+
+                إرسال التقييم ✈
+
+            </button>
+
+
+            <!-- زر الرجوع إلى الملف الشخصي -->
+
+            <button
+                class="profile-btn"
+                onclick="goProfile()">
+
+                الرجوع إلى الملف الشخصي
+
+            </button>
+
+
+            <!-- رسالة النجاح -->
+
+            <div
+                class="success"
+                id="successMessage">
+
+                ✓ تم إرسال تقييمك بنجاح، شكرًا لك!
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= LOCKER ================= -->
+
+        <section class="locker-area">
+
+            <div class="locker">
+
+                <div class="locker-grid">
+
+                    <div class="door locked">
+
+                        <span class="lock">
+                            🔒
+                        </span>
+
+                    </div>
+
+                    <div class="door">
+                        <span class="handle"></span>
+                    </div>
+
+                    <div class="door">
+                        <span class="handle"></span>
+                    </div>
+
+                    <div class="door">
+                        <span class="handle"></span>
+                    </div>
+
+                    <div class="door">
+                        <span class="handle"></span>
+                    </div>
+
+                    <div class="door">
+                        <span class="handle"></span>
+                    </div>
+
+                    <div class="door">
+                        <span class="handle"></span>
+                    </div>
+
+                    <div class="door">
+                        <span class="handle"></span>
+                    </div>
+
+                    <div class="door">
+                        <span class="handle"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="feedback">
+                ♡ Your Feedback Matters
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* ================= التقييم العام ================= */
+
+    const overallStars =
+        document.querySelectorAll(
+            "#overallStars .star"
+        );
+
+    overallStars.forEach(star => {
+
+        star.addEventListener(
+            "click",
+            () => {
+
+                const value =
+                    star.dataset.value;
+
+                overallStars.forEach(s => {
+
+                    s.classList.toggle(
+                        "active",
+                        s.dataset.value <= value
+                    );
+
+                });
+
+            }
+        );
+
+    });
+
+
+    /* ================= التقييمات الفرعية ================= */
+
+    const ratingGroups =
+        document.querySelectorAll(
+            ".small-stars"
+        );
+
+    ratingGroups.forEach(group => {
+
+        const stars =
+            group.querySelectorAll(
+                ".small-star"
+            );
+
+        stars.forEach(star => {
+
+            star.addEventListener(
+                "click",
+                () => {
+
+                    const value =
+                        star.dataset.value;
+
+                    stars.forEach(s => {
+
+                        s.classList.toggle(
+                            "active",
+                            s.dataset.value <= value
+                        );
+
+                    });
+
+                }
+            );
+
+        });
+
+    });
+
+
+    /* ================= إرسال التقييم ================= */
+
+    function submitRating() {
+        try { localStorage.setItem("lockaRatingSubmitted", JSON.stringify({submittedAt:new Date().toISOString()})); } catch (e) {}
+
+        const message =
+            document.getElementById(
+                "successMessage"
+            );
+
+        message.style.display = "block";
+
+        message.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
+
+
+    /* ================= الرجوع إلى الملف الشخصي ================= */
+
+    function goProfile() {
+        window.location.href = "../profile.html";
+    }
+
+</script>
+
+</body>
+</html>

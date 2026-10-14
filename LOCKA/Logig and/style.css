@@ -1,0 +1,570 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700&display=swap');
+
+
+/* =========================================
+   ألوان وهوية LOCKA
+   ========================================= */
+
+:root {
+    --locka-blue: #1B315E;
+    --locka-blue-dark: #122143;
+    --locka-blue-light: #EAF1F9;
+
+    --text-dark: #263A55;
+    --text-gray: #6F7B89;
+
+    --locka-font:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Text",
+        "SF Pro Display",
+        "SF Arabic",
+        "Tajawal",
+        sans-serif;
+}
+
+
+/* =========================================
+   الإعدادات العامة
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--locka-font);
+
+    background-image: url('locka-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+
+    direction: rtl;
+
+    position: relative;
+}
+
+
+/* =========================================
+   خلفية الصفحات الداخلية
+   ========================================= */
+
+body:not(.home-page)::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background-color: rgba(27, 49, 94, 0.25);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    z-index: 0;
+}
+
+
+/* =========================================
+   خلفية الصفحة الرئيسية
+   ========================================= */
+
+body.home-page::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(27, 49, 94, 0.30),
+            rgba(27, 49, 94, 0.30)
+        );
+
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+
+    z-index: 0;
+}
+
+
+/* =========================================
+   الصفحة الرئيسية
+   ========================================= */
+
+.hero-section {
+    position: relative;
+
+    z-index: 1;
+
+    width: 100%;
+    max-width: 450px;
+
+    padding: 30px 25px;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   لوقو الصفحة الرئيسية
+   ========================================= */
+
+.hero-section .project-logo {
+    width: 145px;
+    height: auto;
+    display: block;
+    margin: 0 auto 14px auto;
+
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+
+/* =========================================
+   النص التعريفي
+   ========================================= */
+
+.tagline {
+    font-size: 1.15rem;
+
+    color: #F7FAFE;
+
+    font-weight: 500;
+
+    line-height: 1.8;
+
+    margin: 0 0 28px 0;
+
+    text-shadow:
+        0 2px 5px rgba(20, 45, 75, 0.45);
+}
+
+
+/* =========================================
+   نبذة المشروع
+   ========================================= */
+
+.project-description {
+    font-size: 0.95rem;
+
+    color: #F7FAFE;
+
+    font-weight: 400;
+
+    line-height: 1.9;
+
+    text-align: center;
+
+    margin: 0 0 25px 0;
+
+    text-shadow:
+        0 2px 5px rgba(20, 45, 75, 0.45);
+}
+
+
+/* =========================================
+   زر الصفحة الرئيسية
+   ========================================= */
+
+.home-btn {
+    width: 100%;
+
+    max-width: 370px;
+
+    padding: 14px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    background-color: var(--locka-blue);
+
+    color: #ffffff;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-family: var(--locka-font);
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 6px 18px rgba(27, 49, 94, 0.28);
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.home-btn span {
+    font-size: 1.2rem;
+
+    line-height: 1;
+}
+
+.home-btn:hover {
+    background-color: var(--locka-blue-dark);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(27, 49, 94, 0.32);
+}
+
+.home-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   معلومات المشروع
+   ========================================= */
+
+.footer-info {
+    margin-top: 25px;
+
+    text-align: center;
+
+    color: #F5F8FC;
+
+    text-shadow:
+        0 2px 5px rgba(20, 45, 75, 0.45);
+}
+
+
+/* =========================================
+   نوع المشروع
+   ========================================= */
+
+.footer-info .project-type {
+    display: block;
+
+    font-size: 0.85rem;
+
+    font-weight: 400;
+
+    line-height: 1.7;
+
+    margin-bottom: 6px;
+}
+
+
+/* =========================================
+   البريد الإلكتروني
+   ========================================= */
+
+.footer-info .email {
+    display: block;
+
+    font-size: 0.85rem;
+
+    font-weight: 500;
+
+    margin-bottom: 5px;
+
+    direction: rtl;
+}
+
+
+/* أيقونة البريد الإلكتروني */
+
+.footer-info .email i {
+    margin-left: 6px;
+}
+
+
+/* =========================================
+   معلومات المشروع أسفل الصفحة
+   ========================================= */
+
+body.home-page .footer-info {
+    position: fixed;
+
+    bottom: 20px;
+
+    left: 0;
+
+    width: 100%;
+
+    margin-top: 0;
+
+    padding: 0 15px;
+
+    z-index: 2;
+}
+
+
+/* =========================================
+   صفحات تسجيل الدخول والتسجيل
+   ========================================= */
+
+.container {
+    position: relative;
+
+    z-index: 1;
+
+    background-color: #ffffff;
+
+    padding: 25px 30px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.20);
+
+    width: 100%;
+
+    max-width: 400px;
+
+    text-align: center;
+
+    box-sizing: border-box;
+
+    border: none;
+}
+
+
+/* =========================================
+   لوقو الصفحات الداخلية
+   ========================================= */
+
+.container .project-logo {
+    width: 65px;
+    height: auto;
+    margin: 5px auto 10px auto;
+    display: block;
+
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    filter: none !important;
+}
+
+
+/* =========================================
+   العناوين
+   ========================================= */
+
+h2 {
+    color: var(--locka-blue);
+
+    font-size: 1.6rem;
+
+    font-weight: 700;
+
+    margin: 0 0 3px 0;
+}
+
+p {
+    color: var(--text-gray);
+
+    font-size: 0.9rem;
+
+    margin-bottom: 15px;
+}
+
+
+/* =========================================
+   خانات الإدخال والشارات
+   ========================================= */
+
+.form-group {
+    margin-bottom: 12px;
+
+    position: relative;
+
+    text-align: right;
+}
+
+label {
+    display: none;
+}
+
+
+input[type="text"],
+input[type="tel"],
+input[type="password"] {
+    width: 100%;
+
+    padding: 12px 42px 12px 15px;
+
+    border: 1px solid #DDE3EA;
+
+    border-radius: 10px;
+
+    box-sizing: border-box;
+
+    background-color: #F8FAFC;
+
+    font-family: var(--locka-font);
+
+    font-size: 0.95rem;
+
+    color: #333333;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s,
+        background-color 0.3s,
+        box-shadow 0.3s;
+}
+
+
+/* الخانة عند الضغط */
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus {
+
+    border-color: var(--locka-blue);
+
+    background-color: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(27, 49, 94, 0.10);
+}
+
+
+/* النص داخل الخانات */
+
+input::placeholder {
+    color: #999999;
+}
+
+
+/* =========================================
+   أيقونات الخانات
+   ========================================= */
+
+.input-icon {
+    position: absolute;
+
+    right: 14px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 1.1rem;
+
+    color: var(--locka-blue);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   جميع الأزرار
+   ========================================= */
+
+.btn {
+    display: block;
+
+    width: 100%;
+
+    padding: 12px;
+
+    background-color: var(--locka-blue);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 1.05rem;
+
+    font-weight: 600;
+
+    font-family: var(--locka-font);
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.3s,
+        transform 0.2s;
+
+    box-shadow:
+        0 4px 12px rgba(27, 49, 94, 0.20);
+}
+
+
+.btn:hover {
+    background-color: var(--locka-blue-dark);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   الروابط
+   ========================================= */
+
+.links {
+    margin-top: 15px;
+}
+
+
+.links a {
+    color: var(--locka-blue);
+
+    text-decoration: none;
+
+    font-size: 0.88rem;
+
+    font-weight: 600;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   توحيد خط iOS في جميع الصفحات
+   ========================================= */
+
+body,
+button,
+input,
+textarea,
+select,
+.btn,
+.home-btn {
+    font-family: var(--locka-font);
+}

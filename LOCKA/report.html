@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCKA</title>
+
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #F5F8FF;
+        direction: rtl;
+    }
+
+    .top-bar {
+        width: 100%;
+        height: 90px;
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 25px;
+        direction: ltr;
+        box-shadow: 0 2px 10px rgba(46, 91, 154, 0.08);
+    }
+
+    .menu-btn {
+        font-size: 34px;
+        color: #2E5B9A;
+        cursor: pointer;
+    }
+
+    .top-logo {
+        height: 72px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .top-logo a {
+        display: flex;
+        align-items: center;
+    }
+
+    .top-logo img {
+        width: 85px;
+        height: 72px;
+        object-fit: contain;
+        display: block;
+    }
+
+    .side-menu {
+        position: fixed;
+        top: 0;
+        left: -320px;
+        width: 300px;
+        height: 100%;
+        background-color: white;
+        transition: 0.3s;
+        z-index: 9999;
+        box-shadow: 3px 0 18px rgba(0, 0, 0, 0.12);
+        direction: rtl;
+    }
+
+    .side-menu.open {
+        left: 0;
+    }
+
+    .menu-top {
+        padding: 25px;
+        border-bottom: 1px solid #EEF3FA;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .close-btn {
+        font-size: 28px;
+        color: #2E5B9A;
+        cursor: pointer;
+    }
+
+    .menu-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 14px;
+        padding: 23px 28px;
+        text-decoration: none;
+        color: #2E5B9A;
+        font-size: 21px;
+        border-bottom: 1px solid #EEF3FA;
+    }
+
+    .menu-item i {
+        font-size: 28px;
+        color: #2E5B9A;
+        width: 32px;
+        text-align: center;
+    }
+
+    .menu-item span {
+        color: #2E5B9A;
+    }
+
+    .menu-item:hover {
+        background-color: #F5F8FF;
+    }
+
+    .menu-item.active {
+        background-color: #F7FBFF;
+        font-weight: bold;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 650px;
+        margin: 45px auto;
+        background-color: white;
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(46, 91, 154, 0.12);
+    }
+
+    h1 {
+        color: #2E5B9A;
+        text-align: center;
+        margin-top: 0;
+    }
+
+    .sub-text {
+        color: #5B8FD9;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    label {
+        display: block;
+        color: #2E5B9A;
+        font-weight: bold;
+        margin-top: 18px;
+        margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #A7C8F0;
+        border-radius: 10px;
+        font-size: 15px;
+        background-color: #F5F8FF;
+    }
+
+    textarea {
+        height: 120px;
+        resize: vertical;
+    }
+
+    .file-upload {
+        display: block;
+        text-align: center;
+        background-color: #F5F8FF;
+        border: 1px dashed #A7C8F0;
+        padding: 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #2E5B9A;
+    }
+
+    .file-upload input {
+        display: none;
+    }
+
+    .send-button {
+        width: 100%;
+        margin-top: 25px;
+        padding: 14px;
+        background-color: #2E5B9A;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .send-button:hover {
+        background-color: #5B8FD9;
+    }
+
+    .back-button {
+        width: 100%;
+        margin-top: 12px;
+        padding: 14px;
+        background-color: white;
+        color: #2E5B9A;
+        border: 1px solid #2E5B9A;
+        border-radius: 10px;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .back-button:hover {
+        background-color: #F5F8FF;
+    }
+
+    #successMessage {
+        display: none;
+        color: #2E5B9A;
+        font-weight: bold;
+        margin-top: 18px;
+        text-align: center;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+
+    <div class="menu-btn" onclick="openMenu()">
+        <i class="bi bi-list"></i>
+    </div>
+
+    <div class="top-logo">
+        <a href="Logig and/index.html">
+            <img
+                src="https://i.ibb.co/G40zgL99/bf02642c-d38b-4be5-885a-ba70118ebe05.jpg"
+                alt="LOCKA Logo">
+        </a>
+    </div>
+
+</div>
+
+<div id="sideMenu" class="side-menu">
+
+    <div class="menu-top">
+        <div class="close-btn" onclick="closeMenu()">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+
+    <a href="profile.html" class="menu-item active">
+        <i class="bi bi-house-door"></i>
+        <span>الرئيسية</span>
+    </a>
+
+    <a href="reservations.html" class="menu-item">
+        <i class="bi bi-lock"></i>
+        <span>حجوزاتي</span>
+    </a>
+
+    <a href="notifications.html" class="menu-item">
+        <i class="bi bi-bell"></i>
+        <span>التنبيهات</span>
+    </a>
+
+    <a href="profile.html" class="menu-item">
+        <i class="bi bi-person"></i>
+        <span>حسابي</span>
+    </a>
+
+</div>
+
+<div class="container">
+
+    <h1>الإبلاغ عن عطل أو مشكلة</h1>
+
+    <p class="sub-text">
+        ساعدنا في خدمتك بشكل أفضل
+    </p>
+
+    <form>
+
+        <label>رقم اللوكر</label>
+
+        <input
+            type="text"
+            id="lockerNumber"
+            placeholder="أدخل رقم اللوكر"
+            required
+        >
+
+        <label>نوع المشكلة</label>
+
+        <select>
+            <option>اختر نوع المشكلة</option>
+            <option>اللوكر لا يفتح</option>
+            <option>مشكلة في القفل</option>
+            <option>مشكلة في الحجز</option>
+            <option>مشكلة أخرى</option>
+        </select>
+
+        <label>وصف المشكلة</label>
+
+        <textarea
+            id="problemDescription"
+            placeholder="اكتب تفاصيل المشكلة هنا"
+            required>
+        </textarea>
+
+        <label>إرفاق صورة للمشكلة</label>
+
+        <label class="file-upload">
+            <i class="bi bi-image"></i>
+            اختيار صورة
+            <input type="file" accept="image/*">
+        </label>
+
+        <button
+            type="button"
+            class="send-button"
+            onclick="showMessage()">
+            إرسال البلاغ
+        </button>
+
+        <button
+            type="button"
+            class="back-button"
+            onclick="goBack()">
+            العودة للملف الشخصي
+        </button>
+
+        <p id="successMessage">
+            تم إرسال البلاغ بنجاح ✓
+        </p>
+
+    </form>
+
+</div>
+
+<script>
+
+    function openMenu() {
+        document.getElementById("sideMenu").classList.add("open");
+    }
+
+    function closeMenu() {
+        document.getElementById("sideMenu").classList.remove("open");
+    }
+
+    function showMessage() {
+
+        var locker =
+            document.getElementById("lockerNumber").value;
+
+        var description =
+            document.getElementById("problemDescription").value;
+
+        if (locker == "" || description == "") {
+
+            alert("يرجى تعبئة رقم اللوكر ووصف المشكلة");
+
+        } else {
+            const reports = JSON.parse(localStorage.getItem('lockaReports') || '[]');
+            reports.push({ locker, type: document.querySelector('select')?.value || '', description, createdAt: new Date().toISOString() });
+            localStorage.setItem('lockaReports', JSON.stringify(reports));
+            document.getElementById("successMessage").style.display = "block";
+            document.getElementById("successMessage").textContent = "تم حفظ البلاغ بنجاح ✓";
+        }
+    }
+
+    function goBack() {
+        window.location.href = "profile.html";
+    }
+
+</script>
+
+</body>
+</html>

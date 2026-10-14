@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختيار المبنى والدور</title>
+    <link rel="stylesheet" href="style.css?v=111">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- زر الرجوع -->
+        <a href="index.html" class="btn-view-all" style="margin-bottom: 20px; text-decoration: none;">❮ رجوع</a>
+
+        <h1 class="welcome-title" style="text-align: center; margin-bottom: 30px;">اختيار المبنى والدور</h1>
+
+        <!-- اختيار المبنى -->
+        <div style="margin-bottom: 20px; text-align: right;">
+            <label style="display: block; font-size: 0.9rem; color: #4B5563; margin-bottom: 8px; font-weight: 600;">المبنى</label>
+            <select id="buildingSelect" class="search-bar" style="cursor: pointer;">
+                <option value="" selected disabled>اختر المبنى</option>
+                <option value="F2">مبنى F2 - كلية العلوم</option>
+                <option value="F3">مبنى F3 - كلية الإدارة والاقتصاد</option>
+                <option value="F5">مبنى F5 - كلية الحاسب</option>
+                <option value="F6">مبنى F6 - كلية الشريعة</option>
+                <option value="F7">مبنى F7 - كلية الزراعة</option>
+                <option value="F8">مبنى F8 - كلية العمارة والتخطيط</option>
+                <option value="RAS_SCI">مبنى - الكلية العلمية بالرس</option>
+            </select>
+        </div>
+
+        <!-- اختيار الدور -->
+        <div style="margin-bottom: 30px; text-align: right;">
+            <label style="display: block; font-size: 0.9rem; color: #4B5563; margin-bottom: 8px; font-weight: 600;">الدور</label>
+            <select id="floorSelect" class="search-bar" style="cursor: pointer;">
+                <option value="" selected disabled>اختر الدور</option>
+                <option value="G">الدور الأرضي</option>
+                <option value="1">الدور الأول</option>
+                <option value="2">الدور الثاني</option>
+            </select>
+        </div>
+
+        <!-- زر التالي -->
+        <button id="nextStep" class="card" style="width: 100%; background-color: var(--primary-color); color: #ffffff; border: none; padding: 14px; font-size: 1rem; cursor: pointer;">التالي</button>
+    </div>
+<script src="../locka.js"></script><script>document.getElementById('nextStep').addEventListener('click',()=>{const building=document.getElementById('buildingSelect').value;const floor=document.getElementById('floorSelect').value;if(!building||!floor){alert('اختاري المبنى والدور أولاً');return}LOCKA.set('lockaSelection',{building:document.getElementById('buildingSelect').selectedOptions[0].text,floor:document.getElementById('floorSelect').selectedOptions[0].text,buildingCode:building,floorCode:floor});location.href='../Booking Details/index.html'});</script></body>
+</html>

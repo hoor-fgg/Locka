@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>خزانة - الخزانات المتاحة</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .menu-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-icon {
+            width: 25px;
+            height: 25px;
+            fill: none;
+            stroke: #2d5b9e;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <header class="header">
+
+        <img src="e5c085fd-15d1-4d6d-a512-0117aad22fb9.jpeg"
+             class="logo"
+             alt="خزانة">
+
+        <button class="menu-button" id="menuButton">☰</button>
+
+
+        <!-- القائمة -->
+
+        <div class="menu-dropdown" id="menuDropdown">
+
+<a href="../home Screen/index.html">
+    <svg class="menu-icon" viewBox="0 0 24 24">
+        <path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"></path>
+    </svg>
+    الرئيسية
+</a>
+
+<a href="../notifications.html">
+    <svg class="menu-icon" viewBox="0 0 24 24">
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+        <path d="M10 21h4"></path>
+    </svg>
+    التنبيهات
+</a>
+
+<a href="../reservations.html">
+    <svg class="menu-icon" viewBox="0 0 24 24">
+        <rect x="3" y="7" width="18" height="14" rx="2"></rect>
+        <path d="M7 7V5a5 5 0 0 1 10 0v2"></path>
+    </svg>
+    حجوزاتي
+</a>
+            <a href="../profile.html">
+
+                <svg class="menu-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="7" r="3.5"></circle>
+                    <path d="M5 21c.7-4 3-6 7-6s6.3 2 7 6"></path>
+                </svg>
+
+                حسابي
+
+            </a>
+
+        </div>
+
+
+        <a href="index.html" class="back">
+            ‹
+        </a>
+
+
+        <h1>
+            الخزانات المتاحة
+        </h1>
+
+    </header>
+
+
+    <main class="content">
+
+
+        <div class="location-box">
+
+            <h2>
+                المبنى:
+                <span id="buildingName">—</span>
+            </h2>
+
+            <p>
+                الدور:
+                <span id="floorName">—</span>
+                - اختر الخزانة المناسبة لك
+            </p>
+
+        </div>
+
+
+        <div class="legend">
+
+            <div class="legend-item">
+
+                <span class="dot available-dot"></span>
+
+                متاح
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <span class="dot reserved-dot"></span>
+
+                محجوز
+
+            </div>
+
+        </div>
+
+
+        <div class="lockers">
+
+            <button class="locker available" data-locker="1">1</button>
+            <button class="locker available" data-locker="2">2</button>
+            <button class="locker available" data-locker="3">3</button>
+            <button class="locker reserved" disabled>4</button>
+            <button class="locker reserved" disabled>5</button>
+
+            <button class="locker available" data-locker="6">6</button>
+            <button class="locker available" data-locker="7">7</button>
+            <button class="locker reserved" disabled>8</button>
+            <button class="locker available" data-locker="9">9</button>
+            <button class="locker available" data-locker="10">10</button>
+
+            <button class="locker available" data-locker="11">11</button>
+            <button class="locker available" data-locker="12">12</button>
+            <button class="locker reserved" disabled>13</button>
+            <button class="locker reserved" disabled>14</button>
+            <button class="locker available" data-locker="15">15</button>
+
+            <button class="locker available" data-locker="16">16</button>
+            <button class="locker reserved" disabled>17</button>
+            <button class="locker available" data-locker="18">18</button>
+            <button class="locker available" data-locker="19">19</button>
+            <button class="locker reserved" disabled>20</button>
+
+            <button class="locker available" data-locker="21">21</button>
+            <button class="locker available" data-locker="22">22</button>
+            <button class="locker reserved" disabled>23</button>
+            <button class="locker available" data-locker="24">24</button>
+            <button class="locker available" data-locker="25">25</button>
+
+        </div>
+
+
+        <div class="booking-card">
+
+            <h3 id="selectedText">
+                هل تريد حجز خزانة؟
+            </h3>
+
+            <p id="bookingHint">
+                اضغط على الخزانة المتاحة لاختيارها،
+                ثم انتقل إلى تفاصيل الحجز.
+            </p>
+
+            <a href="booking-details.html"
+               class="main-button"
+               id="continueButton">
+
+                الانتقال إلى تفاصيل الحجز
+
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="../locka.js"></script><script>
+
+const buildingName =
+    localStorage.getItem("buildingName");
+
+const floorName =
+    localStorage.getItem("floorName");
+
+
+if (buildingName) {
+
+    document.getElementById("buildingName").textContent =
+        buildingName;
+
+}
+
+
+if (floorName) {
+
+    document.getElementById("floorName").textContent =
+        floorName;
+
+}
+
+
+const lockers =
+    document.querySelectorAll(".locker.available");
+
+
+const selectedText =
+    document.getElementById("selectedText");
+
+
+const bookingHint =
+    document.getElementById("bookingHint");
+
+
+const continueButton =
+    document.getElementById("continueButton");
+
+
+lockers.forEach(function(locker) {
+
+    locker.addEventListener("click", function() {
+
+        lockers.forEach(function(item) {
+
+            item.classList.remove("selected");
+
+        });
+
+
+        locker.classList.add("selected");
+
+
+        const lockerNumber =
+            locker.getAttribute("data-locker");
+
+
+        localStorage.setItem(
+            "selectedLocker",
+            lockerNumber
+        );
+
+
+        selectedText.textContent =
+            "تم اختيار الخزانة رقم " +
+            lockerNumber;
+
+
+        bookingHint.textContent =
+            "يمكنك الآن الانتقال إلى تفاصيل الحجز واختيار التاريخ والوقت.";
+
+    });
+
+});
+
+
+continueButton.addEventListener(
+    "click",
+    function(event) {
+
+        const selectedLocker =
+            localStorage.getItem("selectedLocker");
+
+
+        if (!selectedLocker) {
+
+            event.preventDefault();
+
+
+            alert(
+                "فضلاً اختاري خزانة متاحة أولاً."
+            );
+
+        }
+
+    }
+);
+
+
+const menuButton =
+    document.getElementById("menuButton");
+
+
+const menuDropdown =
+    document.getElementById("menuDropdown");
+
+
+menuButton.addEventListener(
+    "click",
+    function() {
+
+        menuDropdown.classList.toggle("open");
+
+    }
+);
+
+</script>
+
+
+<script>document.querySelectorAll('.locker.available[data-locker]').forEach(btn=>btn.addEventListener('click',()=>{const sel=LOCKA.get('lockaSelection',{});LOCKA.set('lockaSelection',{...sel,locker:btn.dataset.locker});location.href='booking-details.html'}));const sel=LOCKA.get('lockaSelection',{});const heading=document.querySelector('h1');if(heading&&sel.building)heading.title=sel.building+' - '+(sel.floor||'');</script></body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCKA - دفع الحجز</title>
+    <!-- خط IBM Plex Sans Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. واجهة الدفع -->
+    <div id="viewPay">
+        <header class="topbar">
+            <div class="logo"><img src="logo.png" alt="LOCKA"></div>
+            <div class="secure-tag">🔒 دفع آمن</div>
+        </header>
+
+        <main class="container">
+            <a href="../Booking Details/index.html" class="back-btn" id="backBtn"><span aria-hidden="true">→</span> الرجوع لصفحة الحجوزات</a>
+
+            <div class="heading">
+                <h1>إتمام حجز الخزانة</h1>
+                <p class="subtitle">يرجى مراجعة تفاصيل حجزك وإدخال بيانات الدفع لاستكمال العملية.</p>
+            </div>
+
+            <div class="content">
+                <!-- بطاقة التذكرة (تستقبل البيانات ديناميكياً) -->
+                <div class="booking-box">
+                    <div class="ticket-top">
+                        <div class="ticket-label">رقم الخزانة / Locker</div>
+                        <div class="locker-no" id="lockerNo">--</div>
+                    </div>
+                    <div class="ticket-tear"></div>
+                    <div class="ticket-body">
+                        <div class="info">
+                            <span>الموقع:</span>
+                            <strong id="building">--</strong>
+                        </div>
+                        <div class="info">
+                            <span>تاريخ ووقت الحجز:</span>
+                            <strong id="startDate">--</strong>
+                        </div>
+                        <div class="info">
+                            <span>تاريخ الانتهاء:</span>
+                            <strong id="endDate">--</strong>
+                        </div>
+                        <div class="info">
+                            <span>مدة الاشتراك:</span>
+                            <strong id="duration">--</strong>
+                        </div>
+                        <div class="price">
+                            <span>المبلغ الإجمالي:</span>
+                            <strong id="total">-- ر.س</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نموذج الدفع -->
+                <div class="payment-box">
+                    <h2>بيانات البطاقة البنكية</h2>
+
+                    <!-- يظهر فقط إذا ما فيه بيانات حجز -->
+                    <div class="alert" id="noBooking" role="alert" hidden>
+                        لا توجد بيانات حجز. يرجى
+                        <a href="../Booking Details/index.html" id="backToSelect">اختيار الخزانة</a>
+                        أولاً.
+                    </div>
+
+                    <form id="payForm" novalidate>
+                        <div class="field">
+                            <label for="cardNumber">رقم البطاقة</label>
+                            <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" autocomplete="cc-number">
+                            <span class="error" id="err-cardNumber" aria-live="polite"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="cardName">اسم حامل البطاقة</label>
+                            <input type="text" id="cardName" placeholder="الاسم كما هو مدون على البطاقة" autocomplete="cc-name">
+                            <span class="error" id="err-cardName" aria-live="polite"></span>
+                        </div>
+
+                        <div class="card-details">
+                            <div class="field">
+                                <label for="cardExp">تاريخ الانتهاء</label>
+                                <input type="text" id="cardExp" placeholder="MM / YY" maxlength="7" inputmode="numeric" autocomplete="cc-exp">
+                                <span class="error" id="err-cardExp" aria-live="polite"></span>
+                            </div>
+                            <div class="field">
+                                <label for="cardCvv">رمز الأمان (CVV)</label>
+                                <input type="password" id="cardCvv" placeholder="123" maxlength="4" inputmode="numeric" autocomplete="cc-csc">
+                                <span class="error" id="err-cardCvv" aria-live="polite"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="pay-btn" id="payBtn">تأكيد ودفع</button>
+                        <p class="secure">🔒 بيانات بطاقتك لا يتم حفظها</p>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 2. نافذة معالجة الدفع (Overlay) -->
+    <div class="overlay" id="overlay">
+        <div class="modal" id="modal" role="status" aria-live="polite">
+            <div class="loader"></div>
+            <div class="done-icon">✓</div>
+            <h3 id="modalTitle">جاري معالجة الدفع...</h3>
+            <p id="modalDesc">يرجى الانتظار وعدم إغلاق الصفحة</p>
+            <p class="warn">سيتطلب الأمر بضع ثوانٍ لإتمام الاتصال بالبنك</p>
+        </div>
+    </div>
+
+    <!-- 3. واجهة النجاح والتأكيد -->
+    <div id="viewSuccess" hidden>
+        <header class="topbar">
+            <div class="logo"><img src="logo.png" alt="LOCKA"></div>
+            <div class="secure-tag success-tag">تم الحجز بنجاح</div>
+        </header>
+
+        <main class="container">
+            <div class="success-head">
+                <div class="check">✓</div>
+                <h1>تمت عملية الدفع بنجاح!</h1>
+                <p class="subtitle">شكراً لك، تم تأكيد حجز الخزانة. احتفظ برقم الحجز ورمز الفتح أدناه.</p>
+            </div>
+
+            <div class="booking-box success-box">
+                <div class="ticket-top success-top">
+                    <div class="ticket-label">رمز الفتح الخاص بخزانتك</div>
+                    <div class="locker-no passcode" id="passcode">----</div>
+                </div>
+                <div class="ticket-tear"></div>
+                <div class="ticket-body">
+                    <div class="info">
+                        <span>رقم الحجز:</span>
+                        <strong id="bookingRef">--</strong>
+                    </div>
+                    <div class="info">
+                        <span>الخزانة المحجوزة:</span>
+                        <strong id="successLocker">--</strong>
+                    </div>
+                    <div class="info">
+                        <span>المبلغ المدفوع:</span>
+                        <strong id="successTotal" class="paid">--</strong>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" class="btn" id="printBtn">طباعة التأكيد</button>
+                        <button type="button" class="btn secondary" id="homeBtn">الانتقال إلى حجوزاتي</button>
+                    </div>
+                    <p class="note">يرجى الاحتفاظ برمز الفتح لاستخدامه عند استلام الخزانة.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

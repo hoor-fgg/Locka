@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>خريطة مواقع الخزائن</title>
+
+  <style>
+    :root {
+      --navy: #123663;
+      --blue: #3476bd;
+      --blue-light: #e8f1fc;
+      --background: #f3f6fa;
+      --white: #fff;
+      --ink: #26364b;
+      --muted: #718096;
+      --line: #cbd7e4;
+      --room: #edf1f6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 28px 16px;
+      color: var(--ink);
+      background: var(--background);
+      font-family: Tahoma, Arial, sans-serif;
+    }
+
+    .page {
+      width: min(100%, 900px);
+      margin: 0 auto;
+    }
+
+    .page-heading {
+      margin-bottom: 24px;
+    }
+
+    .page-heading h1 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(24px, 5vw, 32px);
+    }
+
+    .page-heading p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .floor-card {
+      margin-bottom: 24px;
+      padding: 22px;
+      border: 1px solid #e0e7ef;
+      border-radius: 18px;
+      background: var(--white);
+      box-shadow: 0 7px 22px rgb(18 54 99 / 6%);
+    }
+
+    .floor-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .floor-heading h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 21px;
+    }
+
+    .floor-tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--blue-light);
+      color: var(--navy);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .plan-scroll {
+      overflow-x: auto;
+      padding: 2px 2px 10px;
+    }
+
+    .floor-plan {
+      min-width: 650px;
+      padding: 16px;
+      border: 3px solid #9aacc0;
+      border-radius: 12px;
+      background: #f8fafd;
+    }
+
+    .rooms {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .room,
+    .landmark {
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: var(--room);
+      color: #53647a;
+      text-align: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .zone-label {
+      margin: 12px 0 7px;
+      color: #52647a;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .locker-row {
+      display: grid;
+      gap: 6px;
+    }
+
+    .ground-north {
+      grid-template-columns: repeat(15, minmax(0, 1fr));
+    }
+
+    .ground-south {
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+    }
+
+    .locker {
+      min-height: 44px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #9bb6d5;
+      border-radius: 7px;
+      background: var(--blue-light);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: bold;
+      direction: ltr;
+    }
+
+    .main-corridor {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 9px 0;
+      padding: 12px;
+      border-block: 3px solid #c2d0df;
+      background: #fff;
+    }
+
+    .corridor-name {
+      color: #63758b;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .entrance,
+    .stairs,
+    .elevator {
+      min-width: 94px;
+      padding: 9px 8px;
+      border: 2px solid #b7c5d5;
+      border-radius: 8px;
+      background: #eef2f7;
+      color: #43566e;
+      text-align: center;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .entrance {
+      border-color: #95bda2;
+      background: #edf7f0;
+      color: #2c6942;
+    }
+
+    /* مخطط الدور الأول: مجموعات خزائن جانبية حول ممر طولي */
+    .first-floor-layout {
+      display: grid;
+      grid-template-columns: 1fr 110px 1fr;
+      gap: 12px;
+      min-height: 430px;
+    }
+
+    .locker-bank {
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      padding: 12px;
+      border: 2px dashed #c2d0df;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .bank-label {
+      margin: 0 0 3px;
+      color: #52647a;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .first-locker {
+      min-height: 35px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #9bb6d5;
+      border-radius: 7px;
+      background: var(--blue-light);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: bold;
+      direction: ltr;
+    }
+
+    .vertical-corridor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 7px;
+      border-inline: 3px solid #c2d0df;
+      background: #fff;
+    }
+
+    .vertical-corridor .corridor-name {
+      writing-mode: vertical-rl;
+      text-align: center;
+    }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      color: #52647a;
+      font-size: 12px;
+    }
+
+    .legend-box {
+      width: 15px;
+      height: 15px;
+      display: inline-block;
+      border: 2px solid #9bb6d5;
+      border-radius: 4px;
+      background: var(--blue-light);
+    }
+
+    .note {
+      margin: 10px 2px 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 18px 9px;
+      }
+
+      .floor-card {
+        padding: 16px 12px;
+      }
+
+      .floor-heading h2 {
+        font-size: 18px;
+      }
+    }
+    .back-btn {
+    display: inline-block;
+    padding: 8px 24px;
+    color: #3b5998;
+    border: 2px solid #3b5998;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: transparent;
+    text-align: center;
+}
+  </style>
+</head>
+<body>
+  <header style="display: flex; justify-content: space-between; align-items: center; margin: 20px 40px;">
+    <a href="../profile.html" class="back-btn">الرجوع إلى الملف الشخصي</a>
+    <img src="LOGO.png" alt="شعار موقع الخزائن" style="width: 80px; float: right; margin: 10px;"> 
+</header>
+  <main class="page">
+    <header class="page-heading">
+  <h1>خريطة مواقع الخزائن</h1>
+
+</header>
+    <!-- مخطط الدور الأرضي -->
+    <section class="floor-card" aria-labelledby="ground-title">
+      <div class="floor-heading">
+        <h2 id="ground-title">الدور الأرضي</h2>
+        <span class="floor-tag">٢٥ خزانة</span>
+      </div>
+
+      <div class="plan-scroll">
+        <div class="floor-plan">
+          <div class="rooms" aria-label="معالم الدور الأرضي">
+            <div class="room">قاعات دراسية</div>
+            <div class="room">مكاتب</div>
+            <div class="room">قاعات دراسية</div>
+          </div>
+
+          <p class="zone-label">صف الخزائن الأول — بجانب القاعات</p>
+          <div class="locker-row ground-north" aria-label="الخزائن من ١ إلى ١٥">
+            <span class="locker">01</span>
+            <span class="locker">02</span>
+            <span class="locker">03</span>
+            <span class="locker">04</span>
+            <span class="locker">05</span>
+            <span class="locker">06</span>
+            <span class="locker">07</span>
+            <span class="locker">08</span>
+            <span class="locker">09</span>
+            <span class="locker">10</span>
+            <span class="locker">11</span>
+            <span class="locker">12</span>
+            <span class="locker">13</span>
+            <span class="locker">14</span>
+            <span class="locker">15</span>
+          </div>
+
+          <div class="main-corridor">
+            <span class="entrance">المدخل الرئيسي</span>
+            <span class="corridor-name">الممر الرئيسي</span>
+            <span class="stairs">الدرج</span>
+          </div>
+
+          <p class="zone-label">صف الخزائن الثاني — مقابل الصف الأول</p>
+          <div class="locker-row ground-south" aria-label="الخزائن من ١٦ إلى ٢٥">
+            <span class="locker">16</span>
+            <span class="locker">17</span>
+            <span class="locker">18</span>
+            <span class="locker">19</span>
+            <span class="locker">20</span>
+            <span class="locker">21</span>
+            <span class="locker">22</span>
+            <span class="locker">23</span>
+            <span class="locker">24</span>
+            <span class="locker">25</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span class="legend-box"></span>
+        <span>موقع خزانة</span>
+      </div>
+    </section>
+
+    <!-- مخطط الدور الأول بتوزيع مختلف -->
+    <section class="floor-card" aria-labelledby="first-title">
+      <div class="floor-heading">
+        <h2 id="first-title">الدور الأول</h2>
+        <span class="floor-tag">٢٥ خزانة</span>
+      </div>
+
+      <div class="plan-scroll">
+        <div class="floor-plan">
+          <div class="rooms" aria-label="معالم الدور الأول">
+            <div class="room">قاعات دراسية</div>
+            <div class="room">منطقة انتظار</div>
+            <div class="room">مكاتب</div>
+          </div>
+
+          <p class="zone-label">الخزائن موزعة في مجموعات على جانبي الممر</p>
+
+          <div class="first-floor-layout">
+            <div class="locker-bank" aria-label="مجموعة الخزائن من ١ إلى ١٣">
+              <p class="bank-label">مجموعة الخزائن — الجهة الأولى</p>
+              <span class="first-locker">01</span>
+              <span class="first-locker">02</span>
+              <span class="first-locker">03</span>
+              <span class="first-locker">04</span>
+              <span class="first-locker">05</span>
+              <span class="first-locker">06</span>
+              <span class="first-locker">07</span>
+              <span class="first-locker">08</span>
+              <span class="first-locker">09</span>
+              <span class="first-locker">10</span>
+              <span class="first-locker">11</span>
+              <span class="first-locker">12</span>
+              <span class="first-locker">13</span>
+            </div>
+
+            <div class="vertical-corridor">
+              <span class="stairs">الدرج</span>
+              <span class="corridor-name">الممر</span>
+              <span class="elevator">المصعد</span>
+            </div>
+
+            <div class="locker-bank" aria-label="مجموعة الخزائن من ١٤ إلى ٢٥">
+              <p class="bank-label">مجموعة الخزائن — الجهة الثانية</p>
+              <span class="first-locker">14</span>
+              <span class="first-locker">15</span>
+              <span class="first-locker">16</span>
+              <span class="first-locker">17</span>
+              <span class="first-locker">18</span>
+              <span class="first-locker">19</span>
+              <span class="first-locker">20</span>
+              <span class="first-locker">21</span>
+              <span class="first-locker">22</span>
+              <span class="first-locker">23</span>
+              <span class="first-locker">24</span>
+              <span class="first-locker">25</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span class="legend-box"></span>
+        <span>موقع خزانة</span>
+      </div>
+    </section>
+
+    <p class="note">
+        
+    </p>
+  </main>
+</body>
+</html>
+<!-- مخطط الدور الثاني -->
+<section class="floor-card" aria-labelledby="second-title">
+  <div class="floor-heading">
+    <h2 id="second-title">الدور الثاني</h2>
+    <span class="floor-tag">٢٥ خزانة</span>
+  </div>
+
+  <div class="plan-scroll">
+    <div class="floor-plan">
+      <div class="rooms" aria-label="معالم الدور الثاني">
+        <div class="room">قاعات دراسية</div>
+        <div class="room">ردهة</div>
+        <div class="room">مكاتب</div>
+      </div>
+
+      <p class="zone-label">صف الخزائن بجانب القاعات — ٩ خزائن</p>
+      <div class="second-top-row" aria-label="الخزائن من ١ إلى ٩">
+        <span class="second-locker">01</span>
+        <span class="second-locker">02</span>
+        <span class="second-locker">03</span>
+        <span class="second-locker">04</span>
+        <span class="second-locker">05</span>
+        <span class="second-locker">06</span>
+        <span class="second-locker">07</span>
+        <span class="second-locker">08</span>
+        <span class="second-locker">09</span>
+      </div>
+
+      <div class="second-floor-layout">
+        <div class="second-side-bank" aria-label="الخزائن من ١٠ إلى ١٧">
+          <p class="bank-label">جهة الدرج — ٨ خزائن</p>
+          <span class="second-locker">10</span>
+          <span class="second-locker">11</span>
+          <span class="second-locker">12</span>
+          <span class="second-locker">13</span>
+          <span class="second-locker">14</span>
+          <span class="second-locker">15</span>
+          <span class="second-locker">16</span>
+          <span class="second-locker">17</span>
+        </div>
+
+        <div class="second-center" aria-label="معالم وسط الدور">
+          <span class="landmark">الممر</span>
+          <span class="landmark">الدرج والمصعد</span>
+          <span class="landmark">منطقة انتظار</span>
+        </div>
+
+        <div class="second-side-bank" aria-label="الخزائن من ١٨ إلى ٢٥">
+          <p class="bank-label">جهة المكاتب — ٨ خزائن</p>
+          <span class="second-locker">18</span>
+          <span class="second-locker">19</span>
+          <span class="second-locker">20</span>
+          <span class="second-locker">21</span>
+          <span class="second-locker">22</span>
+          <span class="second-locker">23</span>
+          <span class="second-locker">24</span>
+          <span class="second-locker">25</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span class="legend-box"></span>
+    <span>موقع خزانة</span>
+  </div>
+</section>

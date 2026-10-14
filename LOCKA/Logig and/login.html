@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locka - تسجيل الدخول</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- اللوجو فوق الكلام وبمسافة بسيطة جداً -->
+        <img src="logo.png" alt="Locka Logo" class="project-logo">
+        
+        <h2>مرحباً بك</h2>
+        <p>للمتابعة يرجى تسجيل الدخول</p>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="text" required placeholder="أدخل اسمك الكامل">
+            </div>
+
+            <div class="form-group">
+                <i class="fa-solid fa-id-card input-icon"></i>
+                <input type="text" required placeholder="أدخل رقمك الجامعي">
+            </div>
+            
+            <div class="form-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" required placeholder="أدخل كلمة المرور">
+            </div>
+            
+            <button type="submit" class="btn" style="margin-top: 15px;">تسجيل الدخول</button>
+        </form>
+
+        <div class="links">
+            <a href="forget-password.html">نسيت كلمة المرور؟</a><br><br>
+            <a href="register.html">ليس لديك حساب؟ إنشاء حساب جديد</a>
+        </div>
+    </div>
+
+<script>document.getElementById('loginForm').addEventListener('submit',e=>{e.preventDefault();const inputs=e.currentTarget.querySelectorAll('input');const user={name:inputs[0].value.trim(),studentId:inputs[1].value.trim()};if(!user.name||!user.studentId||!inputs[2].value){alert('أكملي بيانات تسجيل الدخول');return}localStorage.setItem('lockaUser',JSON.stringify(user));location.href='../home Screen/index.html'});</script></body>
+</html>

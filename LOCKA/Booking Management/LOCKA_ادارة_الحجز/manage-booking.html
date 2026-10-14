@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2E5B9A">
+  <title>LOCKA - إدارة الحجز</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar booking-header">
+      <a href="../../reservations.html" class="back" aria-label="العودة">‹</a>
+      <img class="header-logo" src="assets/locka-logo.jpg" alt="LOCKA">
+      <h1 class="header-title">إدارة الحجز</h1>
+      <span class="header-spacer" aria-hidden="true"></span>
+    </header>
+
+    <main class="page">
+      <div id="bookingContent">
+        <div class="page-heading">
+          <div>
+            <h1>إدارة الحجز</h1>
+            <p>إدارة تفاصيل حجز اللوكر وتمديده أو إلغاؤه</p>
+          </div>
+        </div>
+
+        <section class="locker-card card-surface">
+          <div class="locker-illustration" aria-hidden="true">
+            <div class="locker-top"></div>
+            <div class="locker-body">
+              <span class="locker-handle"></span>
+              <span class="locker-slot"></span>
+              <span class="locker-mark">12</span>
+            </div>
+            <div class="locker-shadow"></div>
+          </div>
+          <div class="locker-info">
+            <div class="title-row">
+              <h2 id="lockerNumber">اللوكر —</h2>
+              <span class="status status-active"><i></i>حجز نشط</span>
+            </div>
+            <p><b>المبنى:</b> <span id="buildingName">—</span></p>
+            <p><b>الدور:</b> <span id="floorName">—</span></p>
+          </div>
+        </section>
+
+        <div class="desktop-grid">
+          <section class="card-surface details-card">
+            <div class="section-title">
+              <span class="section-icon">▣</span>
+              <h2>تفاصيل الحجز</h2>
+            </div>
+
+            <div class="detail-list">
+              <div class="detail">
+                <span class="detail-label"><span class="line-icon">▦</span> تاريخ الحجز</span>
+                <strong id="bookingDate">—</strong>
+              </div>
+              <div class="detail">
+                <span class="detail-label"><span class="line-icon">◷</span> وقت البداية</span>
+                <strong id="bookingStart">—</strong>
+              </div>
+              <div class="detail">
+                <span class="detail-label"><span class="line-icon">◷</span> وقت الانتهاء</span>
+                <strong id="bookingEnd">—</strong>
+              </div>
+              <div class="detail">
+                <span class="detail-label"><span class="line-icon">◷</span> المدة الأصلية</span>
+                <strong id="originalDuration">—</strong>
+              </div>
+              <div class="detail extension-detail" id="extensionRow" hidden>
+                <span class="detail-label"><span class="line-icon">↻</span> التمديد</span>
+                <strong id="extensionValue">—</strong>
+              </div>
+              <div class="detail extension-detail" id="extensionPriceRow" hidden>
+                <span class="detail-label"><span class="line-icon">ر</span> مبلغ التمديد</span>
+                <strong id="extensionPriceValue">—</strong>
+              </div>
+            </div>
+
+            <div class="booking-state">
+              <div>
+                <span class="state-label">حالة الحجز</span>
+                <strong>متبقي على انتهاء الحجز</strong>
+                <small id="remainingDuration">—</small>
+              </div>
+              <span class="status status-active"><i></i>حجز نشط</span>
+            </div>
+          </section>
+
+          <aside class="side-panel">
+            <section class="actions-card card-surface">
+              <button class="action-btn extend" type="button" onclick="openExtend()">
+                <span class="action-icon">◷</span>
+                <span><b>تمديد الحجز</b><small>من ساعة إلى أسبوع كحد أقصى</small></span>
+              </button>
+              <button class="action-btn cancel" type="button" onclick="openCancel()">
+                <span class="action-icon">⌑</span>
+                <span><b>إلغاء الحجز</b><small>سيتم حذف تفاصيل الحجز نهائيًا</small></span>
+              </button>
+            </section>
+
+
+          </aside>
+        </div>
+
+        <button class="back-btn" type="button" onclick="location.href='../../reservations.html'">‹ <span>العودة</span></button>
+      </div>
+
+      <section id="emptyBooking" class="empty-booking card-surface" hidden>
+        <div class="empty-icon">✓</div>
+        <h2>لا يوجد حجز نشط</h2>
+        <p>تم إلغاء الحجز وحُذفت تفاصيله من هذه الصفحة.</p>
+        <button class="back-btn" type="button" onclick="location.href='../../reservations.html'">‹ <span>العودة</span></button>
+      </section>
+    </main>
+  </div>
+
+  <div id="extendModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="extendTitle">
+    <div class="modal-box">
+      <button class="close" type="button" onclick="closeExtend()" aria-label="إغلاق">×</button>
+      <h2 id="extendTitle">تمديد الحجز</h2>
+      <p class="modal-subtitle">اختاري المدة الإضافية. الحد الأعلى أسبوع واحد.</p>
+
+      <label for="extendPeriod">مدة التمديد</label>
+      <select id="extendPeriod" onchange="updatePrice()">
+        <option value="1h">ساعة واحدة — 3 ريال</option>
+        <option value="1d">يوم واحد — 5 ريال</option>
+        <option value="2d">يومان — 10 ريال</option>
+        <option value="3d">3 أيام — 15 ريال</option>
+        <option value="4d">4 أيام — 20 ريال</option>
+        <option value="5d">5 أيام — 25 ريال</option>
+        <option value="6d">6 أيام — 25 ريال</option>
+        <option value="7d">أسبوع كامل — 25 ريال</option>
+      </select>
+
+      <div class="new-end-preview">
+        <span>سيصبح انتهاء الحجز</span>
+        <strong id="newEndPreview">2025/08/25 — 11:00 ص</strong>
+      </div>
+
+      <div class="price"><span>المبلغ الإضافي</span><strong id="price">3 ريال</strong></div>
+      <button class="btn primary" type="button" onclick="goToPayment()">الانتقال للدفع</button>
+      <button class="btn secondary" type="button" onclick="closeExtend()">إلغاء</button>
+    </div>
+  </div>
+
+  <div id="cancelModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="cancelTitle">
+    <div class="modal-box cancel-box">
+      <div class="warning">!</div>
+      <h2 id="cancelTitle">تأكيد إلغاء الحجز</h2>
+      <p>هل أنتِ متأكدة من إلغاء الحجز؟</p>
+      <p class="small">بعد التأكيد ستختفي تفاصيل الحجز من هذه الصفحة ولن يعود الحجز نشطًا.</p>
+      <div class="modal-actions">
+        <button class="btn secondary" type="button" onclick="closeCancel()">العودة</button>
+        <button class="btn danger" type="button" onclick="confirmCancel()">إلغاء الحجز</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
